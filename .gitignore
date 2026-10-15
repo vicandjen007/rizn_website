@@ -1,0 +1,11 @@
+.sites-runtime/
+node_modules/
+.local/
+.env
+.env.*
+!.env.example
+
+.wrangler/
+.dev.vars
+.dev.vars.*
+.deploy/
