@@ -34,6 +34,7 @@ export default {
    url.pathname=routes[path]||path;response=await env.ASSETS.fetch(new Request(url,safeRequest));
   }
   const outgoing=new Headers(response.headers);for(const [k,v]of Object.entries(securityHeaders))outgoing.set(k,v);
+  if(!admin&&!path.startsWith('/api/')&&url.hostname==='thearqofficial.com')outgoing.set('Content-Security-Policy',securityHeaders['Content-Security-Policy'].replace("img-src 'self' data:","img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com").replace("script-src 'self'","script-src 'self' https://www.googletagmanager.com")+"; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com");
   if(url.hostname!=='thearqofficial.com')outgoing.set('X-Robots-Tag','noindex, nofollow');
   if(admin||path.startsWith('/api/'))outgoing.set('Cache-Control','no-store');
   return new Response(response.body,{status:response.status,headers:outgoing});
